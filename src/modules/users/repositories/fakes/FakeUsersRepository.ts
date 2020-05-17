@@ -1,3 +1,4 @@
+import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 import User from '@modules/users/infra/typeorm/entities/User';
@@ -33,6 +34,14 @@ class FakeUsersRepository implements IUsersRepository {
   }
 
   public async create(userData: ICreateUserDTO): Promise<User> {
+    const findIndex = this.users.findIndex(
+      user => user.email === userData.email,
+    );
+
+    if (!findIndex) {
+      throw new AppError('User already exist.');
+    }
+
     const user = new User();
 
     Object.assign(user, { id: uuid() }, userData);
