@@ -42,6 +42,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
+  // const history = useHistory();
   const navigation = useNavigation();
 
   const { signIn } = useAuth();
@@ -65,8 +66,6 @@ const SignIn: React.FC = () => {
           email: data.email,
           password: data.password,
         });
-
-        // history.push('/dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErros(err);
